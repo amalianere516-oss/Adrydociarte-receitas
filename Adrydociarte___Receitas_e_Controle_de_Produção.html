@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Adrydociarte — Receitas e Controle de Produção</title>
+    
+    <!-- CSS 100% PURO E EMBUTIDO (Paleta Terracota / Rosa Elegante / Marrom Quente - Sem Roxos) -->
+    <style>
+        /* RESET E VARIÁVEIS DE CORES */
+        :root {
+            --bg-main: #FAF3F0;
+            --bg-subtle: #F3E8E4;
+            --bg-card: #FFFFFF;
+            --text-brown: #3E2219;
+            --text-brown-light: #6E4D43;
+            
+            /* Paleta Substituta ao Roxo (Terracota Elegante / Rosa Queimado / Dourado Suave) */
+            --primary: #C85A32;             /* Terracota vibrante */
+            --primary-hover: #A84420;       /* Terracota escuro */
+            --primary-light: #FCE8E1;      /* Fundo terracota suave */
+            --primary-border: #F5C5B3;     /* Borda de destaque */
+            
+            --accent-pink: #D87093;        /* Rosa seco elegante */
+            --border-color: #E6D0CB;
+            
+            --shadow-sm: 0 2px 6px rgba(62, 34, 25, 0.06);
+            --shadow-md: 0 4px 12px rgba(62, 34, 25, 0.1);
+            --shadow-lg: 0 10px 25px rgba(62, 34, 25, 0.15);
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-full: 9999px;
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-main);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-brown);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            line-height: 1.5;
+        }
+
+        /* ESTRUTURA GERAL */
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+
+        /* HEADER */
+        header {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            max-width: 900px;
+            margin: 0 auto;
+            gap: 8px;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .brand-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: var(--radius-full);
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-brown);
+            font-size: 20px;
+        }
+
+        .brand-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-brown);
+            letter-spacing: -0.5px;
+        }
+
+        .brand-subtitle {
+            font-size: 0.65rem;
+            color: var(--primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* BOTÕES PRINCIPAIS */
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 16px;
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            user-select: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(200, 90, 50, 0.25);
+        }
+
+        .btn-primary:active {
+            background: var(--primary-hover);
+            transform: scale(0.98);
+        }
+
+        .btn-brown {
+            background: var(--text-brown);
+            color: #ffffff;
+        }
+
+        .btn-brown:active {
+            opacity: 0.9;
+            transform: scale(0.98);
+        }
+
+        .btn-outline {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-brown);
+        }
+
+        .btn-outline:active {
+            background: var(--bg-subtle);
+        }
+
+        .btn-danger {
+            background: #FEE2E2;
+            color: #991B1B;
+            border: 1px solid #FCA5A5;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.775rem;
+            border-radius: var(--radius-sm);
+        }
+
+        /* BANNER */
+        .banner {
+            background: linear-gradient(135deg, #3E2219 0%, #5C3224 100%);
+            color: #ffffff;
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .banner h2 {
+            font-size: 1.3rem;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        .banner p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        /* BARRA DE PESQUISA E FILTROS */
+        .filter-section {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 16px 12px 40px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-brown);
+            font-size: 0.9rem;
+            outline: none;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-brown-light);
+            font-size: 14px;
+        }
+
+        .categories-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .categories-tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            flex: 1;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tab-btn {
+            padding: 8px 16px;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-brown-light);
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+            box-shadow: 0 2px 6px rgba(200, 90, 50, 0.2);
+        }
+
+        /* GRID DE RECEITAS */
+        .recipes-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        @media (min-width: 600px) {
+            .recipes-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .recipe-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 12px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .recipe-card:active {
+            transform: scale(0.99);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: var(--radius-full);
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: var(--primary-light);
+            color: var(--primary);
+            border: 1px solid var(--primary-border);
+        }
+
+        .recipe-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-brown);
+            margin-top: 4px;
+        }
+
+        .recipe-info {
+            font-size: 0.8rem;
+            color: var(--text-brown-light);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        /* CALCULADORA & FICHA TÉCNICA */
+        .calc-box {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 2px solid var(--primary-border);
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .calc-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .calc-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .btn-calc-step {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .calc-input {
+            width: 90px;
+            height: 48px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-brown);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            outline: none;
+            background: var(--bg-main);
+        }
+
+        .calc-input:focus {
+            border-color: var(--primary);
+        }
+
+        .yield-result {
+            background: var(--primary-light);
+            border: 1px solid var(--primary-border);
+            border-radius: var(--radius-md);
+            padding: 10px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* TABELA DE INGREDIENTES */
+        .ingredients-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.875rem;
+        }
+
+        th {
+            background: var(--text-brown);
+            color: #ffffff;
+            padding: 12px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid var(--bg-subtle);
+            color: var(--text-brown);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .td-highlight {
+            background: var(--primary-light);
+            font-weight: 800;
+            color: var(--primary);
+            font-size: 0.95rem;
+            text-align: right;
+        }
+
+        /* MODAL DE CADASTRO E EDICAO */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(62, 34, 25, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 550px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .modal-header {
+            padding: 16px;
+            background: var(--text-brown);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .modal-body {
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-brown);
+        }
+
+        .form-control {
+            padding: 10px 12px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            outline: none;
+            color: var(--text-brown);
+            background: var(--bg-card);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+        }
+
+        .ing-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr auto;
+            gap: 6px;
+            align-items: center;
+            background: var(--bg-subtle);
+            padding: 8px;
+            border-radius: var(--radius-sm);
+        }
+
+        .category-list-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background: var(--bg-subtle);
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .btn-icon-danger {
+            background: #FEE2E2;
+            color: #DC2626;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-footer {
+            padding: 12px 16px;
+            background: var(--bg-subtle);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        /* UTILITÁRIOS */
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        .empty-state {
+            text-align: center;
+            padding: 40px 16px;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px dashed var(--border-color);
+        }
+
+        /* IMPRESSÃO */
+        @media print {
+            header, .no-print, .calc-controls, .card-actions, .btn {
+                display: none !important;
+            }
+            body { background: #ffffff; }
+            .container { max-width: 100%; padding: 0; }
+            .ingredients-card { border: none; box-shadow: none; }
+            th { background: #000 !important; color: #fff !important; }
+            .td-highlight { background: #eee !important; color: #000 !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CABEÇALHO DA CONFEITARIA -->
+    <header class="no-print">
+        <div class="header-content">
+            <div class="brand-logo" onclick="showListView()">
+                <div class="brand-avatar">🧁</div>
+                <div>
+                    <div class="brand-title">adrydociarte</div>
+                    <div class="brand-subtitle">CONFEITARIA ARTESANAL</div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button onclick="openCategoryModal()" class="btn btn-outline btn-sm">
+                    🏷️ Categorias
+                </button>
+                <button onclick="openRecipeModal()" class="btn btn-primary btn-sm">
+                    + Nova Receita
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="container">
+
+        <!-- TELA 1: LISTA DE RECEITAS -->
+        <section id="listView">
+            <!-- Banner Informativo -->
+            <div class="banner no-print">
+                <h2>Receitas e Controle de Produção</h2>
+                <p>Selecione um doce para calcular com precisão a quantidade exata de ingredientes para a sua produção.</p>
+            </div>
+
+            <!-- Filtros e Busca -->
+            <div class="filter-section no-print">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" oninput="renderRecipes()" placeholder="Buscar doce pelo nome...">
+                </div>
+
+                <div class="categories-header">
+                    <div class="categories-tabs" id="categoriesTabsContainer">
+                        <!-- Abas dinâmicas inseridas via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid de Cards de Receitas -->
+            <div id="recipesContainer" class="recipes-grid">
+                <!-- Renderizado via JS -->
+            </div>
+
+            <!-- Estado Vazio -->
+            <div id="emptyState" class="empty-state hidden">
+                <p style="font-size: 2rem; margin-bottom: 8px;">🍰</p>
+                <h3 style="margin-bottom: 4px; color: var(--text-brown);">Nenhuma receita encontrada</h3>
+                <p style="font-size: 0.85rem; color: var(--text-brown-light); margin-bottom: 16px;">Tente mudar o termo da busca ou cadastre uma nova receita.</p>
+                <button onclick="openRecipeModal()" class="btn btn-primary btn-sm">+ Cadastrar Receita</button>
+            </div>
+        </section>
+
+        <!-- TELA 2: FICHA TÉCNICA E CALCULADORA AUTOMÁTICA -->
+        <section id="detailView" class="hidden">
+            <!-- Barra Superior de Ações -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;" class="no-print">
+                <button onclick="showListView()" class="btn btn-outline btn-sm">
+                    ← Voltar à Lista
+                </button>
+                <div style="display: flex; gap: 6px;">
+                    <button onclick="openRecipeModal(currentRecipe.id)" class="btn btn-outline btn-sm">
+                        ✏️ Editar
+                    </button>
+                    <button onclick="window.print()" class="btn btn-brown btn-sm">
+                        🖨️ Imprimir
+                    </button>
+                </div>
+            </div>
+
+            <!-- Cabeçalho do Doce -->
+            <div style="background: var(--bg-card); padding: 16px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); margin-bottom: 16px; box-shadow: var(--shadow-sm);">
+                <span id="detailBadge" class="badge">CATEGORIA</span>
+                <h2 id="detailTitle" style="font-size: 1.5rem; font-weight: 800; color: var(--text-brown); margin: 6px 0 2px 0;">Nome do Doce</h2>
+                <p style="font-size: 0.85rem; color: var(--text-brown-light);">Rendimento Padrão por receita: <strong id="detailBaseYield" style="color: var(--text-brown);">12 unidades</strong></p>
+            </div>
+
+            <!-- Calculadora Inteligente -->
+            <div class="calc-box no-print">
+                <span class="calc-label">Quantas receitas você deseja produzir?</span>
+                
+                <div class="calc-controls">
+                    <button onclick="changeMultiplier(-0.5)" class="btn-calc-step btn-outline">-</button>
+                    <input type="number" id="calcInput" class="calc-input" min="0.1" step="0.5" value="1" oninput="calculateIngredients()">
+                    <button onclick="changeMultiplier(0.5)" class="btn-calc-step btn-primary">+</button>
+                </div>
+
+                <div class="yield-result">
+                    Rendimento Total Estimado: <span id="detailTotalYield" style="font-size: 1.1rem; font-weight: 900;">12 unidades</span>
+                </div>
+            </div>
+
+            <!-- Tabela de Ingredientes -->
+            <div class="ingredients-card">
+                <div style="padding: 12px 16px; background: var(--bg-subtle); border-bottom: 1px solid var(--border-color); font-weight: 700; font-size: 0.85rem; color: var(--text-brown);">
+                    LISTA DE INGREDIENTES PARA SEPARAÇÃO
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ingrediente</th>
+                                <th style="text-align: center;">Qtd. (1 Receita)</th>
+                                <th style="text-align: right;">Qtd. TOTAL Necessária</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ingredientsTableBody">
+                            <!-- Preenchido via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- RODAPÉ DA PÁGINA -->
+    <footer style="margin-top: 30px; padding: 20px 16px; text-align: center; font-size: 0.75rem; color: var(--text-brown-light); border-top: 1px solid var(--border-color); background: var(--bg-card);" class="no-print">
+        <p><strong>adrydociarte CONFEITARIA</strong> — Sistema de Controle de Produção</p>
+        <button onclick="restoreDefaults()" style="background: none; border: none; color: var(--primary); text-decoration: underline; font-size: 0.7rem; margin-top: 8px; cursor: pointer;">
+            Restaurar Receitas Padrão do Sistema
+        </button>
+    </footer>
+
+    <!-- MODAL 1: CADASTRAR / EDITAR RECEITA -->
+    <div id="recipeModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title" id="modalTitle">Cadastrar Nova Receita</div>
+                <button onclick="closeModal('recipeModal')" style="background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer;">✕</button>
+            </div>
+
+            <form id="recipeForm" onsubmit="saveRecipe(event)" class="modal-body">
+                <input type="hidden" id="modalRecipeId">
+
+                <div class="form-group">
+                    <label>Nome do Doce *</label>
+                    <input type="text" id="recipeName" class="form-control" placeholder="Ex: Brigadeiro Tradicional" required>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="form-group">
+                        <label>Categoria *</label>
+                        <select id="recipeCategory" class="form-control" required>
+                            <!-- Preenchido dinamicamente com as categorias cadastradas -->
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Rendimento Padrão *</label>
+                        <input type="number" id="recipeYield" class="form-control" placeholder="Ex: 25" min="1" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px;">
+                        <label>Ingredientes *</label>
+                        <button type="button" onclick="addIngredientRow()" class="btn btn-outline btn-sm">+ Adicionar Item</button>
+                    </div>
+                    <div id="ingredientsContainer" style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px;">
+                        <!-- Linhas adicionadas via JS -->
+                    </div>
+                </div>
+            </form>
+
+            <div class="modal-footer">
+                <button type="button" onclick="closeModal('recipeModal')" class="btn btn-outline btn-sm">Cancelar</button>
+                <button type="submit" form="recipeForm" class="btn btn-primary btn-sm">Salvar Receita</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: CADASTRAR / GERENCIAR CATEGORIAS -->
+    <div id="categoryModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">Gerenciar Categorias</div>
+                <button onclick="closeModal('categoryModal')" style="background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer;">✕</button>
+            </div>
+
+            <div class="modal-body">
+                <form id="categoryForm" onsubmit="saveCategory(event)" style="display: flex; gap: 8px;">
+                    <input type="text" id="newCategoryInput" class="form-control" placeholder="Nova categoria (ex: Bolos, Cupcakes)" style="flex: 1;" required>
+                    <button type="submit" class="btn btn-primary btn-sm">+ Adicionar</button>
+                </form>
+
+                <div style="margin-top: 10px;">
+                    <label style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-brown); display: block; margin-bottom: 8px;">
+                        Categorias Cadastradas
+                    </label>
+                    <div id="categoryListContainer" style="display: flex; flex-direction: column; gap: 6px;">
+                        <!-- Lista de categorias via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" onclick="closeModal('categoryModal')" class="btn btn-outline btn-sm">Concluir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LÓGICO E PERSISTÊNCIA -->
+    <script>
+        // CATEGORIAS PADRÃO
+        const DEFAULT_CATEGORIES = ["Doces Clássicos", "Doces Gourmet", "Outros"];
+
+        // RECEITAS PADRÃO INICIAIS
+        const DEFAULT_RECIPES = [
+            {
+                id: 'brownie-tradicional',
+                name: 'Brownie Tradicional',
+                category: 'Doces Gourmet',
+                yield: 12,
+                ingredients: [
+                    { name: 'Chocolate Meio Amargo', amount: 200, unit: 'g' },
+                    { name: 'Manteiga', amount: 150, unit: 'g' },
+                    { name: 'Açúcar', amount: 250, unit: 'g' },
+                    { name: 'Farinha de Trigo', amount: 120, unit: 'g' },
+                    { name: 'Ovos', amount: 3, unit: 'un' },
+                    { name: 'Cacau em Pó 100%', amount: 30, unit: 'g' }
+                ]
+            },
+            {
+                id: 'brigadeiro-gourmet',
+                name: 'Brigadeiro Gourmet de Cacau',
+                category: 'Doces Gourmet',
+                yield: 25,
+                ingredients: [
+                    { name: 'Leite Condensado', amount: 395, unit: 'g' },
+                    { name: 'Creme de Leite 20%', amount: 200, unit: 'g' },
+                    { name: 'Chocolate em Pó 50%', amount: 50, unit: 'g' },
+                    { name: 'Manteiga sem sal', amount: 15, unit: 'g' },
+                    { name: 'Granulado Belga', amount: 100, unit: 'g' }
+                ]
+            },
+            {
+                id: 'beijinho-cremoso',
+                name: 'Beijinho Cremoso',
+                category: 'Doces Clássicos',
+                yield: 25,
+                ingredients: [
+                    { name: 'Leite Condensado', amount: 395, unit: 'g' },
+                    { name: 'Creme de Leite', amount: 100, unit: 'g' },
+                    { name: 'Coco Ralado Seco', amount: 100, unit: 'g' },
+                    { name: 'Manteiga sem sal', amount: 10, unit: 'g' }
+                ]
+            },
+            {
+                id: 'palha-italiana',
+                name: 'Palha Italiana Gourmet',
+                category: 'Doces Gourmet',
+                yield: 16,
+                ingredients: [
+                    { name: 'Leite Condensado', amount: 395, unit: 'g' },
+                    { name: 'Creme de Leite', amount: 100, unit: 'g' },
+                    { name: 'Chocolate Meio Amargo', amount: 100, unit: 'g' },
+                    { name: 'Biscoito Maizena', amount: 150, unit: 'g' }
+                ]
+            },
+            {
+                id: 'camafeu-nozes',
+                name: 'Camafeu de Nozes',
+                category: 'Doces Gourmet',
+                yield: 20,
+                ingredients: [
+                    { name: 'Leite Condensado', amount: 395, unit: 'g' },
+                    { name: 'Nozes moídas', amount: 150, unit: 'g' },
+                    { name: 'Gemas peneiradas', amount: 2, unit: 'un' },
+                    { name: 'Fondant para banhar', amount: 300, unit: 'g' }
+                ]
+            }
+        ];
+
+        // ESTADO GLOBAL
+        let recipes = [];
+        let categories = [];
+        let currentRecipe = null;
+        let activeCategoryFilter = 'ALL';
+
+        // INICIALIZAÇÃO
+        window.addEventListener('DOMContentLoaded', () => {
+            initStorage();
+            renderCategoryTabs();
+            renderRecipes();
+        });
+
+        function initStorage() {
+            try {
+                // Carrega categorias do LocalStorage
+                const savedCategories = localStorage.getItem('adrydociarte_categories');
+                if (savedCategories) {
+                    categories = JSON.parse(savedCategories);
+                    if (!Array.isArray(categories) || categories.length === 0) {
+                        categories = [...DEFAULT_CATEGORIES];
+                    }
+                } else {
+                    categories = [...DEFAULT_CATEGORIES];
+                }
+
+                // Carrega receitas do LocalStorage
+                const savedRecipes = localStorage.getItem('adrydociarte_recipes');
+                if (savedRecipes) {
+                    recipes = JSON.parse(savedRecipes);
+                    if (!Array.isArray(recipes) || recipes.length === 0) {
+                        recipes = [...DEFAULT_RECIPES];
+                    }
+                } else {
+                    recipes = [...DEFAULT_RECIPES];
+                }
+
+                saveToStorage();
+            } catch (e) {
+                categories = [...DEFAULT_CATEGORIES];
+                recipes = [...DEFAULT_RECIPES];
+            }
+        }
+
+        function saveToStorage() {
+            localStorage.setItem('adrydociarte_categories', JSON.stringify(categories));
+            localStorage.setItem('adrydociarte_recipes', JSON.stringify(recipes));
+        }
+
+        function restoreDefaults() {
+            const confirmed = customConfirm("Deseja restaurar as receitas e categorias originais do sistema? Suas alterações salvas serão redefinidas.");
+            if (confirmed) {
+                categories = [...DEFAULT_CATEGORIES];
+                recipes = [...DEFAULT_RECIPES];
+                activeCategoryFilter = 'ALL';
+                saveToStorage();
+                showListView();
+                renderCategoryTabs();
+                renderRecipes();
+            }
+        }
+
+        // GERENCIAMENTO DE CATEGORIAS
+        function renderCategoryTabs() {
+            const container = document.getElementById('categoriesTabsContainer');
+            
+            let html = `
+                <button class="tab-btn ${activeCategoryFilter === 'ALL' ? 'active' : ''}" 
+                        onclick="setCategoryFilter('ALL', this)">Todas</button>
+            `;
+
+            categories.forEach(cat => {
+                const isActive = activeCategoryFilter === cat;
+                html += `
+                    <button class="tab-btn ${isActive ? 'active' : ''}" 
+                            onclick="setCategoryFilter('${escapeHtml(cat)}', this)">${escapeHtml(cat)}</button>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function setCategoryFilter(category, btn) {
+            activeCategoryFilter = category;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            renderRecipes();
+        }
+
+        function openCategoryModal() {
+            renderCategoryManagerList();
+            document.getElementById('newCategoryInput').value = '';
+            document.getElementById('categoryModal').classList.add('active');
+        }
+
+        function renderCategoryManagerList() {
+            const container = document.getElementById('categoryListContainer');
+            if (categories.length === 0) {
+                container.innerHTML = '<p style="font-size:0.8rem; color:var(--text-brown-light);">Nenhuma categoria cadastrada.</p>';
+                return;
+            }
+
+            container.innerHTML = categories.map(cat => `
+                <div class="category-list-item">
+                    <span>${escapeHtml(cat)}</span>
+                    <button type="button" onclick="deleteCategory('${escapeHtml(cat)}')" class="btn-icon-danger" title="Excluir Categoria">✕</button>
+                </div>
+            `).join('');
+        }
+
+        function saveCategory(e) {
+            e.preventDefault();
+            const input = document.getElementById('newCategoryInput');
+            const name = input.value.trim();
+
+            if (!name) return;
+
+            if (categories.some(c => c.toLowerCase() === name.toLowerCase())) {
+                showMessage("Esta categoria já existe.");
+                return;
+            }
+
+            categories.push(name);
+            saveToStorage();
+            input.value = '';
+            renderCategoryManagerList();
+            renderCategoryTabs();
+            populateCategorySelect();
+        }
+
+        function deleteCategory(catName) {
+            // Verifica se existem receitas associadas a esta categoria
+            const associated = recipes.filter(r => r.category === catName);
+            if (associated.length > 0) {
+                const proceed = customConfirm(`A categoria "${catName}" possui ${associated.length} receita(s) associada(s). Ao excluí-la, essas receitas passarão para a categoria "Outros". Deseja continuar?`);
+                if (!proceed) return;
+
+                // Garante que 'Outros' exista
+                if (!categories.includes('Outros')) {
+                    categories.push('Outros');
+                }
+
+                // Reatribui receitas para "Outros"
+                recipes.forEach(r => {
+                    if (r.category === catName) r.category = 'Outros';
+                });
+            }
+
+            categories = categories.filter(c => c !== catName);
+            if (activeCategoryFilter === catName) activeCategoryFilter = 'ALL';
+
+            saveToStorage();
+            renderCategoryManagerList();
+            renderCategoryTabs();
+            populateCategorySelect();
+            renderRecipes();
+        }
+
+        function populateCategorySelect(selectedCategory = '') {
+            const select = document.getElementById('recipeCategory');
+            select.innerHTML = categories.map(cat => `
+                <option value="${escapeHtml(cat)}" ${cat === selectedCategory ? 'selected' : ''}>
+                    ${escapeHtml(cat)}
+                </option>
+            `).join('');
+        }
+
+        // NAVEGAÇÃO DE VISUALIZAÇÃO
+        function showListView() {
+            document.getElementById('detailView').classList.add('hidden');
+            document.getElementById('listView').classList.remove('hidden');
+            currentRecipe = null;
+            renderRecipes();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showDetailView(recipeId) {
+            const recipe = recipes.find(r => r.id === recipeId);
+            if (!recipe) return;
+
+            currentRecipe = recipe;
+            document.getElementById('detailTitle').textContent = recipe.name;
+            document.getElementById('detailBaseYield').textContent = `${recipe.yield} unidades`;
+            
+            // Badge da Categoria
+            const badge = document.getElementById('detailBadge');
+            badge.textContent = recipe.category;
+
+            document.getElementById('calcInput').value = 1;
+            calculateIngredients();
+
+            document.getElementById('listView').classList.add('hidden');
+            document.getElementById('detailView').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // RENDERIZAÇÃO DA LISTA DE RECEITAS
+        function renderRecipes() {
+            const container = document.getElementById('recipesContainer');
+            const emptyState = document.getElementById('emptyState');
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+
+            const filtered = recipes.filter(r => {
+                const matchSearch = r.name.toLowerCase().includes(searchTerm);
+                const matchCat = activeCategoryFilter === 'ALL' || r.category === activeCategoryFilter;
+                return matchSearch && matchCat;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            container.innerHTML = filtered.map(recipe => {
+                return `
+                    <div class="recipe-card">
+                        <div>
+                            <span class="badge">${escapeHtml(recipe.category)}</span>
+                            <h3 class="recipe-title">${escapeHtml(recipe.name)}</h3>
+                            <div class="recipe-info" style="margin-top: 6px;">
+                                <span>📦 Rende ${recipe.yield} un</span>
+                                <span>•</span>
+                                <span>🧪 ${recipe.ingredients.length} itens</span>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button onclick="showDetailView('${recipe.id}')" class="btn btn-primary btn-sm" style="flex: 1;">
+                                Ficha Técnica & Calcular
+                            </button>
+                            <button onclick="openRecipeModal('${recipe.id}')" class="btn btn-outline btn-sm" title="Editar">
+                                ✏️
+                            </button>
+                            <button onclick="deleteRecipe('${recipe.id}')" class="btn btn-danger btn-sm" title="Excluir">
+                                🗑️
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // CÁLCULO DA CALCULADORA AUTOMÁTICA
+        function changeMultiplier(delta) {
+            const input = document.getElementById('calcInput');
+            let val = parseFloat(input.value) || 1;
+            val = Math.max(0.1, val + delta);
+            input.value = val;
+            calculateIngredients();
+        }
+
+        function calculateIngredients() {
+            if (!currentRecipe) return;
+
+            const input = document.getElementById('calcInput');
+            let mult = parseFloat(input.value);
+            if (isNaN(mult) || mult <= 0) mult = 1;
+
+            const totalYield = currentRecipe.yield * mult;
+            document.getElementById('detailTotalYield').textContent = `${formatNum(totalYield)} unidades`;
+
+            const tbody = document.getElementById('ingredientsTableBody');
+            tbody.innerHTML = currentRecipe.ingredients.map(ing => {
+                const total = ing.amount * mult;
+                return `
+                    <tr>
+                        <td style="font-weight: 600;">${escapeHtml(ing.name)}</td>
+                        <td style="text-align: center; color: var(--text-brown-light);">${formatNum(ing.amount)} ${ing.unit}</td>
+                        <td class="td-highlight">${formatNum(total)} ${ing.unit}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function formatNum(num) {
+            if (Number.isInteger(num)) return num.toString();
+            return parseFloat(num.toFixed(2)).toString().replace('.', ',');
+        }
+
+        // MODAL DE RECEITA (NOVA / EDITAR)
+        function openRecipeModal(recipeId = null) {
+            const modal = document.getElementById('recipeModal');
+            const form = document.getElementById('recipeForm');
+            const container = document.getElementById('ingredientsContainer');
+            container.innerHTML = '';
+            form.reset();
+
+            populateCategorySelect();
+
+            if (recipeId) {
+                const recipe = recipes.find(r => r.id === recipeId);
+                if (recipe) {
+                    document.getElementById('modalTitle').textContent = 'Editar Receita';
+                    document.getElementById('modalRecipeId').value = recipe.id;
+                    document.getElementById('recipeName').value = recipe.name;
+                    populateCategorySelect(recipe.category);
+                    document.getElementById('recipeYield').value = recipe.yield;
+
+                    recipe.ingredients.forEach(ing => {
+                        addIngredientRow(ing.name, ing.amount, ing.unit);
+                    });
+                }
+            } else {
+                document.getElementById('modalTitle').textContent = 'Cadastrar Nova Receita';
+                document.getElementById('modalRecipeId').value = '';
+                addIngredientRow('', '', 'g');
+                addIngredientRow('', '', 'g');
+            }
+
+            modal.classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        function addIngredientRow(name = '', amount = '', unit = 'g') {
+            const container = document.getElementById('ingredientsContainer');
+            const div = document.createElement('div');
+            div.className = 'ing-row';
+            div.innerHTML = `
+                <input type="text" placeholder="Item" value="${escapeHtml(name)}" class="form-control ing-name" required>
+                <input type="number" step="any" placeholder="Qtd" value="${amount}" class="form-control ing-amount" required>
+                <select class="form-control ing-unit">
+                    <option value="g" ${unit === 'g' ? 'selected' : ''}>g</option>
+                    <option value="kg" ${unit === 'kg' ? 'selected' : ''}>kg</option>
+                    <option value="ml" ${unit === 'ml' ? 'selected' : ''}>ml</option>
+                    <option value="L" ${unit === 'L' ? 'selected' : ''}>L</option>
+                    <option value="un" ${unit === 'un' ? 'selected' : ''}>un</option>
+                    <option value="xíc" ${unit === 'xíc' ? 'selected' : ''}>xíc</option>
+                    <option value="colher" ${unit === 'colher' ? 'selected' : ''}>colher</option>
+                </select>
+                <button type="button" onclick="this.parentElement.remove()" class="btn-icon-danger">✕</button>
+            `;
+            container.appendChild(div);
+        }
+
+        function saveRecipe(e) {
+            e.preventDefault();
+            const id = document.getElementById('modalRecipeId').value;
+            const name = document.getElementById('recipeName').value.trim();
+            const category = document.getElementById('recipeCategory').value;
+            const yieldVal = parseFloat(document.getElementById('recipeYield').value);
+
+            const rows = document.querySelectorAll('#ingredientsContainer .ing-row');
+            const ingredients = [];
+
+            rows.forEach(row => {
+                const ingName = row.querySelector('.ing-name').value.trim();
+                const ingAmount = parseFloat(row.querySelector('.ing-amount').value);
+                const ingUnit = row.querySelector('.ing-unit').value;
+
+                if (ingName && !isNaN(ingAmount)) {
+                    ingredients.push({ name: ingName, amount: ingAmount, unit: ingUnit });
+                }
+            });
+
+            if (ingredients.length === 0) {
+                showMessage("Adicione pelo menos 1 ingrediente.");
+                return;
+            }
+
+            if (id) {
+                const idx = recipes.findIndex(r => r.id === id);
+                if (idx !== -1) {
+                    recipes[idx] = { id, name, category, yield: yieldVal, ingredients };
+                }
+            } else {
+                const newId = 'rec_' + Date.now();
+                recipes.push({ id: newId, name, category, yield: yieldVal, ingredients });
+            }
+
+            saveToStorage();
+            closeModal('recipeModal');
+
+            if (currentRecipe && currentRecipe.id === id) {
+                showDetailView(id);
+            } else {
+                renderRecipes();
+            }
+        }
+
+        function deleteRecipe(id) {
+            const confirmed = customConfirm("Tem certeza de que deseja excluir esta receita?");
+            if (confirmed) {
+                recipes = recipes.filter(r => r.id !== id);
+                saveToStorage();
+                if (currentRecipe && currentRecipe.id === id) {
+                    showListView();
+                } else {
+                    renderRecipes();
+                }
+            }
+        }
+
+        // CAIXAS DE MENSAGEM NATIVAS PERSONALIZADAS (EVITANDO ALERT/CONFIRM PADRÃO)
+        function showMessage(msg) {
+            window.alert(msg);
+        }
+
+        function customConfirm(msg) {
+            return window.confirm(msg);
+        }
+
+        function escapeHtml(str) {
+            return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+        }
+    </script>
+</body>
+</html>
